@@ -1,0 +1,130 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image Classification</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+        .card:hover {
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>   
+</head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Team Believer</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'homepage'%}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'main' %}">Recognition</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link disabled" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <div class="container">
+        <div class="headerimg" style="text-align: center;">
+        <img src="{% static 'dataset-cover.jpg' %}" alt="" width=1100px>
+        </div>
+
+        <div class="first" style="text-align: center;">
+            {% if not obj %}
+        <h2>Choose an Image File</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}} <!--'as_p' means p tags-->
+            <button type="submit" class="btn btn-success">Upload</button>
+            </form>
+            {% endif %}
+        </div>
+
+           <div class="second" style="text-align: center; margin-top: 10px;">
+            <div class="row">
+              <div class="col-6">
+            {% if obj %}
+            <p>This is your selected image</p>
+            <img src="{{ obj.image.url}}" alt="image" width=250px, height=250px >
+            <p>{{pred}}</p>
+            
+          </div>
+          <div class="col-6">
+            <p>Nutrition Table for {{pred}} [per 100g]</p>
+            {% if not info %}
+            <table class="table table-hover">
+              <tbody>
+                <tr>
+                  <th>Calories</th>
+                  <td>{{Calories}}kcal</td>
+                  <th>Lipid</th>
+                  <td>{{Lipid}}g</td>
+                </tr>
+                <tr>
+                  <th>Total Carbohydrate</th>
+                  <td>{{carbohydrate}}g</td>
+                  <th>Protein</th>
+                  <td>{{protein}}g</td>
+                </tr>
+                <tr>
+                  <th>Vitamin C</th>
+                  <td>{{vitamin_c}}%</td>
+                  <th>Calcium</th>
+                  <td>{{calcium}}%</td>
+                </tr>
+                <tr>
+                  <th>Iron</th>
+                  <td>{{iron}}%</td>
+                  <th>Vitamin D</th>
+                  <td>{{vitamin_d}}%</td>
+                </tr>
+                <tr>
+                  <th>Magnesium</th>
+                  <td>{{magnesium}}%</td>
+                  <th>Sodium</th>
+                  <td>{{Sodium}}mg</td>
+                </tr>
+              </tbody>
+            </table>
+            {% endif %}
+            {% if info %}
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/008/255/802/small/page-not-found-error-404-system-updates-uploading-computing-operation-installation-programs-system-maintenance-graffiti-sprayed-page-not-found-error-404-isolated-on-white-background-vector.jpg" alt="" width=400px>
+            <h3>{{info}}</h3>
+            {% endif %}
+          </div>
+          </div>
+          {% endif %}
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+
+
+
